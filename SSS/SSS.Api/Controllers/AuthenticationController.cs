@@ -18,7 +18,9 @@ public class AuthenticationController : ControllerBase {
         var authResult = _authenticationService.Register(
             registerRequest.Username,
             registerRequest.Email,
-            registerRequest.Password);
+            registerRequest.Password,
+            registerRequest.FirstName,
+            registerRequest.LastName);
 
         var response = new AuthenticationResponse(
             authResult.User.Id,

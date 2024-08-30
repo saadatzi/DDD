@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using SSS.Application.Common.Interfaces.Authentication;
 using SSS.Application.Common.Interfaces.Services;
+using SSS.Domain.Entities;
 
 namespace SSS.Application.Services.Authentication;
 
@@ -21,19 +22,26 @@ public class AuthenticationService : IAuthenticationService
         _dateTimeProvider = dateTimeProvider;
     }
 
-    AuthenticationResult IAuthenticationService.Register(string username, string email, string password)
+    AuthenticationResult IAuthenticationService.Register(
+        string username,
+        string email,
+        string password,
+        string firstname,
+        string lastname)
     {
-        // Check if user already exists
-        // Create user (generate unique Id)
-        // Create JWT Token
-        Guid userId = Guid.NewGuid();
-        var token = _jwtTokenGenerator.GenerateToken(userId, email);
+        // 2. Create user (generate unique Id) & Persist to DB
+        var user = new User
+        {
+            Username = username,
+            Email = email,
+            PasswordHash = password,
+            FirstName = firstname,
+            LastName = lastname
+
+        };
         return new AuthenticationResult(
             "login successfuly",
-            new User(
-                userId,
-                email,
-                _dateTimeProvider.UtcNow.ToString()),
+            user,
             token);
     }
     AuthenticationResult IAuthenticationService.Login(string email, string password)
@@ -43,10 +51,7 @@ public class AuthenticationService : IAuthenticationService
 
         return new AuthenticationResult(
             "login successfuly",
-            new User(
-                Guid.NewGuid(),
-                email,
-                _dateTimeProvider.UtcNow.ToString()),
+            user,
             token);
     }
 

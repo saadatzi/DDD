@@ -39,7 +39,9 @@ POST {{host}}/auth/register
 {
   "username": "john_doe",
   "email": "john@example.com",
-  "password": "securePassword123"
+  "password": "securePassword123",
+  "firstname": "john",
+  "lastname": "doe",
 }
 ```
 
@@ -53,6 +55,8 @@ POST {{host}}/auth/register
     "id": "string",
     "username": "john_doe",
     "email": "john@example.com",
+    "firstname": "john",
+    "lastname": "doe",
     "createdAt": "2023-08-29T12:00:00Z"
   },
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"

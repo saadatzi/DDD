@@ -18,12 +18,7 @@ public class AuthenticationService : IAuthenticationService
         IDateTimeProvider dateTimeProvider)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
-    AuthenticationResult IAuthenticationService.Login(string email, string password)
-    {
-        return new AuthenticationResult(
-            "login successfuly",
-            new User(Guid.NewGuid(), email, DateTime.UtcNow.ToString()),
-            "Token");
+        _dateTimeProvider = dateTimeProvider;
     }
 
     AuthenticationResult IAuthenticationService.Register(string username, string email, string password)
@@ -38,6 +33,7 @@ public class AuthenticationService : IAuthenticationService
             new User(
                 userId,
                 email,
+                _dateTimeProvider.UtcNow.ToString()),
             token);
     }
     AuthenticationResult IAuthenticationService.Login(string email, string password)
@@ -50,8 +46,7 @@ public class AuthenticationService : IAuthenticationService
             new User(
                 Guid.NewGuid(),
                 email,
-            new User(Guid.NewGuid(), email, DateTime.UtcNow.ToString()),
-            "Token");
+                _dateTimeProvider.UtcNow.ToString()),
             token);
     }
 

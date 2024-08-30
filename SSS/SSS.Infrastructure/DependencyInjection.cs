@@ -1,8 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SSS.Application.Common.Interfaces.Authentication;
+using SSS.Application.Common.Interfaces.Persistence;
 using SSS.Application.Common.Interfaces.Services;
 using SSS.Infrastructure.Authentication;
+using SSS.Infrastructure.Persistence;
 using SSS.Infrastructure.Services;
 
 namespace SSS.Infrastructure;
@@ -17,6 +19,8 @@ public static class DependencyInjection
         
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
         return services;
     }
     

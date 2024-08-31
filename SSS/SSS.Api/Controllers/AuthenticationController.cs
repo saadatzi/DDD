@@ -6,7 +6,6 @@ using SSS.Contracts.Authentication;
 
 [ApiController]
 [Route("auth")]
-[ErrorHandlingFilter]
 public class AuthenticationController : ControllerBase {
     private readonly IAuthenticationService _authenticationService;
 

@@ -1,4 +1,4 @@
-using SSS.Api.Middelware;
+using SSS.Api.Filters;
 using SSS.Application;
 using SSS.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(option => option.Filters.Add<ErrorHandlingFilterAttribute>());
 }
 
 var app = builder.Build();

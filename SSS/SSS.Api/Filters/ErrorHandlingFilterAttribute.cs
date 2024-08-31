@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -13,9 +10,15 @@ public class ErrorHandlingFilterAttribute : ExceptionFilterAttribute
     {
         var exception = context.Exception;
 
-        context.Result = new ObjectResult(new { error = $"An error accurred while processing your request."}){
-            StatusCode = 500
+        var problemDetails = new ProblemDetails
+        {
+            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
+            Title = "An error accurred while processing your request.",
+            Status = (int)HttpStatusCode.InternalServerError,
+            Instance = exception.Source,
         };
+
+        context.Result = new ObjectResult(problemDetails);
 
         context.ExceptionHandled = true;
     }

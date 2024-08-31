@@ -70,3 +70,8 @@ Here's an example response when the GetError endpoint is called:
   "detail": "Your current balance is 30, but that costs 50.",
   "instance": "/example/error"
 }
+
+
+### Minimal API vs. MVC Controllers:
+- Minimal APIs are a new feature in ASP.NET Core that provides a lightweight way to define HTTP endpoints. They do not use controllers or routes defined in controllers. Instead, they map directly to functions.
+- When you use app.Map("/error", ...), it directly associates the /error path with the function provided, bypassing the traditional controller mechanism.

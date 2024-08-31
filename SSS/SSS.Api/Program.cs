@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using SSS.Api.Errors;
 using SSS.Application;
@@ -9,12 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
     builder.Services.AddControllers();
-    builder.Services.AddSingleton<ProblemDetailsFactory, SSSProblemDetailsFactory>();
 }
 
 var app = builder.Build();
 {
-    app.UseExceptionHandler("/error");
+    // app.UseExceptionHandler("/error");
+    // Minimal api approach 
+    app.Map("/error", (HttpContext httpcontext) =>
+    {
+        Exception? exception = httpcontext.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+        return Results.Problem(title: exception?.Message); // similar to problem in the error controller
+    });
     app.UseHttpsRedirection();
     app.MapControllers();
     app.Run();

@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using SSS.Api.Filters;
 using SSS.Application.Services.Authentication;
 using SSS.Contracts.Authentication;
 
 
 [ApiController]
 [Route("auth")]
+[ErrorHandlingFilter]
 public class AuthenticationController : ControllerBase {
     private readonly IAuthenticationService _authenticationService;
 

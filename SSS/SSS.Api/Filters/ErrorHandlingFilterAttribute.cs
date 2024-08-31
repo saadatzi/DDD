@@ -12,10 +12,8 @@ public class ErrorHandlingFilterAttribute : ExceptionFilterAttribute
 
         var problemDetails = new ProblemDetails
         {
-            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
             Title = "An error accurred while processing your request.",
             Status = (int)HttpStatusCode.InternalServerError,
-            Instance = exception.Source,
         };
 
         context.Result = new ObjectResult(problemDetails);

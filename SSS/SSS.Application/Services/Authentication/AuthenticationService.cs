@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
 using System.Security.Authentication;
-using System.Threading.Tasks;
 using SSS.Application.Common.Interfaces.Authentication;
 using SSS.Application.Common.Interfaces.Persistence;
 using SSS.Application.Common.Interfaces.Services;

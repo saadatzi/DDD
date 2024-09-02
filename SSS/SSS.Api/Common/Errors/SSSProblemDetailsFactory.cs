@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
+using SSS.Api.Common.Http;
 
-namespace SSS.Api.Errors;
+namespace SSS.Api.Common.Errors;
 
 public class SSSProblemDetailsFactory : ProblemDetailsFactory
 {
@@ -28,7 +30,7 @@ public class SSSProblemDetailsFactory : ProblemDetailsFactory
         _configure = problemDetailsOptions?.Value?.CustomizeProblemDetails;
     }
 
-    
+
     /// <inheritdoc />
     public override ProblemDetails CreateProblemDetails(
         HttpContext httpContext,
@@ -103,7 +105,12 @@ public class SSSProblemDetailsFactory : ProblemDetailsFactory
             problemDetails.Extensions["traceId"] = traceId;
         }
 
-        problemDetails.Extensions.Add("contentLength or a customProperty", httpContext?.Response.ContentLength);
+        var errors = httpContext?.Items[HttpContextItemKeys.Errors] as List<Error>;
+
+        if (errors is not null)
+        {
+            problemDetails.Extensions.Add("errorCodes", errors.Select(e => e.Code));
+        }
 
         _configure?.Invoke(new() { HttpContext = httpContext!, ProblemDetails = problemDetails });
     }

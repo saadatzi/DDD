@@ -1,9 +1,13 @@
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices;
 using System.Security.Authentication;
+using ErrorOr;
 using FluentResults;
 using SSS.Application.Common.Errors;
 using SSS.Application.Common.Interfaces.Authentication;
 using SSS.Application.Common.Interfaces.Persistence;
 using SSS.Application.Common.Interfaces.Services;
+using SSS.Domain.Common.Errors;
 using SSS.Domain.Entities;
 
 namespace SSS.Application.Services.Authentication;
@@ -17,7 +21,7 @@ public class AuthenticationService(
     private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
     private readonly IUserRepository _userRepository = userRepository;
 
-    public Result<AuthenticationResult> Register(
+    public ErrorOr<AuthenticationResult> Register(
         string username,
         string email,
         string password,
@@ -27,7 +31,7 @@ public class AuthenticationService(
         // 1. Check if user already exists
         if(_userRepository.GetUserByEmail(email) != null)
         {
-            return Result.Fail<AuthenticationResult>(new[] {new DuplicateEmailError()});
+            return Errors.User.DuplicateEmail;
         }
         // 2. Create user (generate unique Id) & Persist to DB
         var user = new User
@@ -47,12 +51,17 @@ public class AuthenticationService(
             user,
             token);
     }
-    public AuthenticationResult Login(string email, string password)
+    public ErrorOr<AuthenticationResult> Login(string email, string password)
     {
-        var user = _userRepository.GetUserByEmail(email) ?? throw new DuplicateEmailException($"The User doesn't exists with this email: {email}");
+        if(_userRepository.GetUserByEmail(email) is not User user)
+        {
+            return Errors.Authentication.InvalidCredentials;
+        } 
+
         if (user.PasswordHash != password)
         {
-            throw new AuthenticationException("Invalid password.");
+            return new[] { Errors.Authentication.InvalidCredentials };
+            
         }
 
         var token = _jwtTokenGenerator.GenerateToken(user);

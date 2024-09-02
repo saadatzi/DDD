@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using SSS.Api.Errors;
+using SSS.Api.Common.Errors;
 using SSS.Application;
 using SSS.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);

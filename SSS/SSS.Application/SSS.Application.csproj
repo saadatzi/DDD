@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ErrorOr" Version="2.0.1" />
     <PackageReference Include="FluentResults" Version="3.16.0" />
-    <PackageReference Include="OneOf" Version="3.0.271" />
     <ProjectReference Include="..\SSS.Domain\SSS.Domain.csproj" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
   </ItemGroup>

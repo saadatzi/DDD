@@ -1,5 +1,5 @@
 using System.Security.Authentication;
-using OneOf;
+using FluentResults;
 using SSS.Application.Common.Errors;
 using SSS.Application.Common.Interfaces.Authentication;
 using SSS.Application.Common.Interfaces.Persistence;
@@ -17,7 +17,7 @@ public class AuthenticationService(
     private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
     private readonly IUserRepository _userRepository = userRepository;
 
-    public OneOf<AuthenticationResult, IError> Register(
+    public Result<AuthenticationResult> Register(
         string username,
         string email,
         string password,
@@ -27,7 +27,7 @@ public class AuthenticationService(
         // 1. Check if user already exists
         if(_userRepository.GetUserByEmail(email) != null)
         {
-            return new DuplicateEmailError();
+            return Result.Fail<AuthenticationResult>(new[] {new DuplicateEmailError()});
         }
         // 2. Create user (generate unique Id) & Persist to DB
         var user = new User

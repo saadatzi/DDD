@@ -1,5 +1,5 @@
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
-using OneOf;
 using SSS.Application.Common.Errors;
 using SSS.Application.Services.Authentication;
 using SSS.Contracts.Authentication;
@@ -15,17 +15,27 @@ namespace SSS.Api.Controllers
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest registerRequest)
         {
-            OneOf.OneOf<AuthenticationResult, IError> registerResult = _authenticationService.Register(
+            Result<AuthenticationResult> registerResult = _authenticationService.Register(
                 registerRequest.Username,
                 registerRequest.Email,
                 registerRequest.Password,
                 registerRequest.FirstName,
                 registerRequest.LastName);
 
-            return registerResult.Match(
-                authResult => Ok(MapAuthResult(authResult)),
-                error => Problem(statusCode: (int)error.StatusCode, title: error.ErrorMessage)
-            );
+            if (registerResult.IsSuccess)
+            {
+                return Ok(MapAuthResult(registerResult.Value));
+            }
+
+            var error = registerResult.Errors[0];
+
+            if (error is DuplicateEmailError)
+            {
+                return Problem(statusCode: StatusCodes.Status409Conflict, title: $"User with this email already exists: {registerRequest.Email}");
+            }
+
+            return Problem();
+            
         }
 
         private static AuthenticationResponse MapAuthResult(AuthenticationResult registerResult)

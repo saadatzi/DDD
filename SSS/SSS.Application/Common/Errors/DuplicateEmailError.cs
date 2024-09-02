@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-
+using FluentResults;
 namespace SSS.Application.Common.Errors;
 
-public record struct DuplicateEmailError : IError
+public class DuplicateEmailError : FluentResults.IError
 {
-    public HttpStatusCode StatusCode => HttpStatusCode.Conflict;
+    public List<FluentResults.IError> Reasons => throw new NotImplementedException();
 
-    public string ErrorMessage => $"User with this email already exists";
+    public string Message => throw new NotImplementedException();
+
+    public Dictionary<string, object> Metadata => throw new NotImplementedException();
 }

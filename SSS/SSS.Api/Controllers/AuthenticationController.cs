@@ -1,49 +1,56 @@
 using Microsoft.AspNetCore.Mvc;
-using SSS.Api.Filters;
+using OneOf;
+using SSS.Application.Common.Errors;
 using SSS.Application.Services.Authentication;
 using SSS.Contracts.Authentication;
 
-
-[ApiController]
-[Route("auth")]
-public class AuthenticationController : ControllerBase {
-    private readonly IAuthenticationService _authenticationService;
-
-    public AuthenticationController(IAuthenticationService authenticationService)
+namespace SSS.Api.Controllers
+{
+    [ApiController]
+    [Route("auth")]
+    public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
     {
-        _authenticationService = authenticationService;
-    }
+        private readonly IAuthenticationService _authenticationService = authenticationService;
 
-    [HttpPost("register")]
-    public IActionResult Register(RegisterRequest registerRequest) {
-        var authResult = _authenticationService.Register(
-            registerRequest.Username,
-            registerRequest.Email,
-            registerRequest.Password,
-            registerRequest.FirstName,
-            registerRequest.LastName);
+        [HttpPost("register")]
+        public IActionResult Register(RegisterRequest registerRequest)
+        {
+            OneOf.OneOf<AuthenticationResult, IError> registerResult = _authenticationService.Register(
+                registerRequest.Username,
+                registerRequest.Email,
+                registerRequest.Password,
+                registerRequest.FirstName,
+                registerRequest.LastName);
 
-        var response = new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.Email,
-            authResult.Token
-        );
+            return registerResult.Match(
+                authResult => Ok(MapAuthResult(authResult)),
+                error => Problem(statusCode: (int)error.StatusCode, title: error.ErrorMessage)
+            );
+        }
 
-        return Ok(authResult);
-    }
+        private static AuthenticationResponse MapAuthResult(AuthenticationResult registerResult)
+        {
+            return new AuthenticationResponse(
+                            registerResult.User.Id,
+                            registerResult.User.Email,
+                            registerResult.Token
+                        );
+        }
 
-    [HttpPost("login")]
-    public IActionResult Login(LoginRequest loginRequest) {
-        var authResult = _authenticationService.Login(
-            loginRequest.Email,
-            loginRequest.Password);
+        [HttpPost("login")]
+        public IActionResult Login(LoginRequest loginRequest)
+        {
+            var authResult = _authenticationService.Login(
+                loginRequest.Email,
+                loginRequest.Password);
 
-        var response = new AuthenticationResponse(
-            authResult.User.Id,
-        authResult.User.Email,
-            authResult.Token
-        );
-        
-        return Ok(response);
+            var response = new AuthenticationResponse(
+                authResult.User.Id,
+                authResult.User.Email,
+                authResult.Token
+            );
+
+            return Ok(response);
+        }
     }
 }

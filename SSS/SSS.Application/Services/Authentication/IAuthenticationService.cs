@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OneOf;
+using SSS.Application.Common.Errors;
 
 namespace SSS.Application.Services.Authentication;
 
 public interface IAuthenticationService
 {
-    AuthenticationResult Login(string email, string password);
-    AuthenticationResult Register(
+    public AuthenticationResult Login(string email, string password);
+    public OneOf<AuthenticationResult, IError> Register(
         string username,
         string email,
         string password,

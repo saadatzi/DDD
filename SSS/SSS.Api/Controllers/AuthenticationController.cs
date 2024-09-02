@@ -1,20 +1,25 @@
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
-using SSS.Application.Services.Authentication;
+using SSS.Application.Services.Authentication.Commands;
+using SSS.Application.Services.Authentication.Common;
+using SSS.Application.Services.Authentication.Queries;
 using SSS.Contracts.Authentication;
 using SSS.Domain.Common.Errors;
 
 namespace SSS.Api.Controllers
 {
     [Route("auth")]
-    public class AuthenticationController(IAuthenticationService authenticationService) : ApiController
+    public class AuthenticationController(
+        IAuthenticationCommandService authenticationCommandService,
+        IAuthenticationQueryService authenticationQueryService) : ApiController
     {
-        private readonly IAuthenticationService _authenticationService = authenticationService;
+        private readonly IAuthenticationCommandService _authenticationCommandService = authenticationCommandService;
+        private readonly IAuthenticationQueryService _authenticationQueryService = authenticationQueryService;
 
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest registerRequest)
         {
-            ErrorOr<AuthenticationResult> authResult = _authenticationService.Register(
+            ErrorOr<AuthenticationResult> authResult = _authenticationCommandService.Register(
                 registerRequest.Username,
                 registerRequest.Email,
                 registerRequest.Password,
@@ -30,7 +35,7 @@ namespace SSS.Api.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginRequest loginRequest)
         {
-            var authResult = _authenticationService.Login(
+            var authResult = _authenticationQueryService.Login(
                 loginRequest.Email,
                 loginRequest.Password);
 

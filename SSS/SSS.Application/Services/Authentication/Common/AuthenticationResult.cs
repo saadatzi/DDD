@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SSS.Domain.Entities;
 
-namespace SSS.Application.Services.Authentication;
+namespace SSS.Application.Services.Authentication.Common;
 
 public record AuthenticationResult(
     string Message,

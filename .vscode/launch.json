@@ -8,7 +8,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/SSS/SSS.Api/bin/Debug/net8.0/SSS.Api.dll", // Change to your project's output path
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/SSS/SSS.Api",
             "stopAtEntry": false,
             // "serverReadyAction": { // this interrupts opening the browser
             //     "action": "openExternally",

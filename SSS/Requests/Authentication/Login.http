@@ -1,14 +1,8 @@
 @host= http://localhost:5034
 POST {{host}}/auth/login
+content-type: application/json
 
-
-### Request
-
-#### Headers
-Content-Type: application/json
-
-#### Body
 {
-  "email": "john@example.com",
-  "password": "securePassword123"
+    "email": "john@example.com",
+    "password": "securePassword123"
 }

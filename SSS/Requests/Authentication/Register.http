@@ -1,15 +1,11 @@
 @host= http://localhost:5034
 POST {{host}}/auth/register
+content-type: application/json
 
-
-### Request
-
-#### Headers
-Content-Type: application/json
-
-#### Body
 {
-  "username": "john_doe",
+  "username": "john_dou",
   "email": "john@example.com",
-  "password": "securePassword123"
+  "password": "securePassword123",
+  "firstname": "john",
+  "lastname": "dou"
 }

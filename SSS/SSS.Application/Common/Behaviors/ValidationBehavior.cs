@@ -1,27 +1,47 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Threading.Tasks;
 using ErrorOr;
+using FluentResults;
+using FluentValidation;
 using MediatR;
-using SSS.Application.Authentication.Commands.Register;
-using SSS.Application.Authentication.Common;
 
 namespace SSS.Application.Common.Behaviors;
 
-public class ValidationRegisterCommandBehavior : 
-    IPipelineBehavior<RegisterCommand, ErrorOr<AuthenticationResult>>
+public class ValidationBehavior<TRequest, TResponse> : 
+    IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
+    where TResponse : IErrorOr
 {
-    public async Task<ErrorOr<AuthenticationResult>> Handle(
-        RegisterCommand request,
-        RequestHandlerDelegate<ErrorOr<AuthenticationResult>> next,
+
+    private readonly IValidator<TRequest>? _validator;
+
+    public ValidationBehavior(IValidator<TRequest>? validator = null)
+    {
+        _validator = validator;
+    }
+
+    public async Task<TResponse> Handle(
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        // before the handler
-        var result = await next();
-        // after the handler
+        if (_validator is null)
+        {
+            return await next();
+        }
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
-        return result;
+        if (validationResult.IsValid)
+        {
+            return await next();
+        } 
+
+        var errors = validationResult.Errors
+            .ConvertAll(validationFailure => ErrorOr.Error.Validation(
+                validationFailure.PropertyName,
+                validationFailure.ErrorMessage));
+
+        // (dynamic) it will check in the runtime if there is a way to turn errors list into error objects
+        // Otherwise we can use the reflection approach can be found in the erroror readme
+        // Since that we know when we arrive at this point we have list of errors that can be convert to erroror object
+        return (dynamic)errors; 
     }
 }

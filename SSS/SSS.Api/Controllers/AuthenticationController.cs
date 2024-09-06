@@ -1,6 +1,7 @@
 using ErrorOr;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SSS.Application.Authentication.Commands.Register;
 using SSS.Application.Authentication.Common;
@@ -11,6 +12,7 @@ using SSS.Domain.Common.Errors;
 namespace SSS.Api.Controllers
 {
     [Route("auth")]
+    [AllowAnonymous]
     public class AuthenticationController : ApiController
     {
         private readonly ISender _mediator;

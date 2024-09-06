@@ -13,9 +13,10 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddMediatR(typeof(DependencyInjection).Assembly);
-        services.AddScoped<
-            IPipelineBehavior<RegisterCommand, ErrorOr<AuthenticationResult>>, 
-            ValidationRegisterCommandBehavior>();
+
+        services.AddScoped(
+            typeof(IPipelineBehavior<,>),
+            typeof(ValidationBehavior<,>));
         
         // services.AddScoped<IValidator<RegisterCommand>, RegisterCommandValidator>(); // This way we need to wire(DI) each validator
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); // so we install aspnetcore package of FluentValidator

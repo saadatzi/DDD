@@ -38,7 +38,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         };
 
         var securityToken = new JwtSecurityToken(
-            issuer: _jwtSetting.Issure,
+            issuer: _jwtSetting.Issuer,
             expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSetting.ExpiryMinutes),
             claims: claims,
             audience: _jwtSetting.Audience,

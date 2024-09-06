@@ -10,9 +10,9 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
     public RegisterCommandValidator()
     {
-        RuleFor(x => x.FirstName).NotEmpty().WithMessage("Firstname Cannot be empty");
-        RuleFor(x => x.LastName).NotEmpty().WithMessage("LastName Cannot be empty");
-        RuleFor(x => x.Email).NotEmpty().WithMessage("Email Cannot be empty");
-        RuleFor(x => x.Password).NotEmpty().WithMessage("Password Cannot be empty");
+        RuleFor(x => x.FirstName).NotEmpty();
+        RuleFor(x => x.LastName).NotEmpty();
+        RuleFor(x => x.Email).NotEmpty();
+        RuleFor(x => x.Password).NotEmpty();
     }
 }

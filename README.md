@@ -63,8 +63,12 @@ If your project exposes an API, provide a link to the API documentation or descr
 
 Explain any configuration options available in your project. This may include:
 - Configuration files
+    - .vscode/launch.json
+    - .vscode/settings.json
+    - .vscode/tasks.json
 - Environment variables
     - dotnet user-secrets init --project SSS/SSS.Api
+    - dotnet user-secrets list --project SSS/SSS.Api
 - Default settings
 
 ```json

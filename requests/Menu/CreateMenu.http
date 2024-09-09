@@ -1,0 +1,44 @@
+@host= http://localhost:5034
+@hostId="host-67890"
+@token=""
+POST {{host}}/hosts/{{hostId}}/menus
+content-type: application/json
+
+{
+  "name": "Delicious Bites Menu",
+  "description": "A delightful selection of appetizers, main courses, desserts, and beverages.",
+  "sections": [ 
+    {
+      "name": "Appetizers",
+      "description": "Start your meal with our delicious appetizers.",
+      "items": [
+        {
+          "name": "Garlic Bread",
+          "description": "Toasted bread with garlic butter and herbs",
+          "price": 4.99
+        }, 
+        {
+          "name": "Bruschetta",
+          "description": "Grilled bread topped with tomatoes, basil, and olive oil",
+          "price": 5.99
+        }
+      ]
+    },
+    {
+      "name": "Main Courses",
+      "description": "Satisfy your hunger with our hearty main courses.",
+      "items": [
+        {
+          "name": "Spaghetti Carbonara",
+          "description": "Pasta with eggs, cheese, pancetta, and black pepper",
+          "price": 12.99
+        },
+        {
+          "name": "Chicken Alfredo",
+          "description": "Grilled chicken with creamy Alfredo sauce over fettuccine",
+          "price": 14.99
+        }
+      ]
+    }
+   ]
+}

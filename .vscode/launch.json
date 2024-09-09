@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SSS/SSS.Api/bin/Debug/net8.0/SSS.Api.dll", // Change to your project's output path
+            "program": "${workspaceFolder}/src/SSS.Api/bin/Debug/net8.0/SSS.Api.dll", // Change to your project's output path
             "args": [],
-            "cwd": "${workspaceFolder}/SSS/SSS.Api",
+            "cwd": "${workspaceFolder}/src/SSS.Api",
             "stopAtEntry": false,
             // "serverReadyAction": { // this interrupts opening the browser
             //     "action": "openExternally",

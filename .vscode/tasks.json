@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/SSS/SSS.Api/SSS.Api.csproj" // Change to your actual .csproj file
+                "${workspaceFolder}/src/SSS.Api/SSS.Api.csproj" // Change to your actual .csproj file
             ],
             "problemMatcher": "$msCompile",
             "group": {

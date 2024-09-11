@@ -4,7 +4,7 @@ public record MenuResponse(
     Guid Id,
     string Name,
     string Description,
-    float? AverageReting,
+    double? AverageReting,
     List<MenuSectionResponse> Sections,
     string HostId,
     List<string> DinnerIds,
@@ -13,7 +13,7 @@ public record MenuResponse(
     DateTime UpdatedDateTime);
 
 public record MenuSectionResponse(
-    string Id,
+    Guid Id,
     string Name,
     string Description,
     List<MenuItemResponse> Items);
@@ -21,4 +21,5 @@ public record MenuSectionResponse(
 public record MenuItemResponse(
     Guid Id,
     string Name,
-    string Description);
+    string Description,
+    float Price);

@@ -3,13 +3,14 @@ namespace SSS.Contracts.Menus;
 public record CreateMenuRequest(
     string Name,
     string Description,
-    List<MenuSection> Sections);
-public record MenuSection
+    List<MenuSectionRequest> Sections);
+public record MenuSectionRequest
 (
     string Name,
     string Description,
-    List<MenuItem> MenuItems);
-public record MenuItem
+    List<MenuItemRequest> Items);
+public record MenuItemRequest
 (
     string Name,
-    string Description);
+    string Description,
+    float Price);

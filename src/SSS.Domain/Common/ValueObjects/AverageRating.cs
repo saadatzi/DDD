@@ -7,19 +7,28 @@ namespace SSS.Domain.Common.ValueObjects;
 
 public class AverageRating : ValueObject
 {
+    private AverageRating()
+    {
+    }
+
     private AverageRating(double value, int numRatings)
     {
         Value = value;
         NumRatings = numRatings;
     }
 
-    public double Value { get; private set; }
+    public double Value { get; private set; } = double.NaN;
 
-    public int NumRatings { get; private set; }
+    public int NumRatings { get; private set; } = 0;
 
     public static AverageRating Create(double value, int numRatings)
     {
         return new(value, numRatings);
+    }
+
+    public static AverageRating Empty()
+    {
+        return new();
     }
 
     public void AddNewRating(Rating rating)

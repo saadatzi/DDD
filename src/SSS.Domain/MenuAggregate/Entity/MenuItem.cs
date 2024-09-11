@@ -5,16 +5,26 @@ namespace SSS.Domain.Menu.Entity;
 
 public sealed class MenuItem : Entity<MenuItemId>
 {
-    private MenuItem(MenuItemId menuItemId, string name, string description)
-    : base(menuItemId)
+    private MenuItem(MenuItemId itemId, string name, string description, float price)
+    : base(itemId)
     {
         Name = name;
         Description = description;
+        Price = price;
     }
 
     public string Name { get; }
 
     public string Description { get; }
 
-    public static MenuItem Create(MenuItemId menuItemId, string name, string desc) => new MenuItem(menuItemId, name, desc);
+    public float Price { get; }
+
+    public static MenuItem Create(
+        string name,
+        string desc,
+        float price) => new MenuItem(
+            MenuItemId.CreateUnique(),
+            name,
+            desc,
+            price);
 }

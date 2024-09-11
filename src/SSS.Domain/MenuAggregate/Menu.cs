@@ -1,11 +1,12 @@
 using SSS.Domain.Common.Dinner.ValueObjects;
 using SSS.Domain.Common.Models;
+using SSS.Domain.Common.ValueObjects;
 using SSS.Domain.Host.ValueObjects;
 using SSS.Domain.Menu.Entity;
 using SSS.Domain.Menu.ValueObjects;
 using SSS.Domain.MenuReview.ValueObjects;
 
-namespace SSS.Domain.Menu;
+namespace SSS.Domain.MenuAggregate;
 
 /// <summary>
 /// Represents a menu in the domain.
@@ -21,18 +22,20 @@ public sealed class Menu : AggregateRoot<MenuId>
         MenuId id,
         string name,
         string description,
-        float averageRating,
+        List<MenuSection> sections,
         HostId hostId,
+        AverageRating? averageRating,
         DateTime createdDateTime,
         DateTime updateDateTime)
         : base(id)
     {
-        this.Name = name;
-        this.Description = description;
-        this.AverageRating = averageRating;
-        this.HostId = hostId;
-        this.CreatedDateTime = createdDateTime;
-        this.UpdatedDateTime = updateDateTime;
+        Name = name;
+        Description = description;
+        _sections = sections;
+        AverageRating = averageRating;
+        HostId = hostId;
+        CreatedDateTime = createdDateTime;
+        UpdatedDateTime = updateDateTime;
     }
 
     /// <summary>
@@ -63,7 +66,7 @@ public sealed class Menu : AggregateRoot<MenuId>
     /// <summary>
     /// Gets the average rating for this menu item.
     /// </summary>
-    public float AverageRating { get; }
+    public AverageRating? AverageRating { get; }
 
     /// <summary>
     /// Gets the host id of this menu item.
@@ -85,19 +88,22 @@ public sealed class Menu : AggregateRoot<MenuId>
     /// </summary>
     /// <param name="name">The name of the menu.</param>
     /// <param name="description">The description of the menu.</param>
-    /// <param name="averageRating">The average rating of the menu.</param>
+    /// <param name="sections">The list of sections associated with the menu.</param>
     /// <param name="hostId">The ID of the host associated with the menu.</param>
+    /// <param name="averageRating">The average rating of the menu.</param>
     /// <returns>A new instance of the <see cref="Menu"/> class.</returns>
     public static Menu Create(
         string name,
         string description,
-        float averageRating,
-        HostId hostId) => new Menu(
+        List<MenuSection> sections,
+        HostId hostId,
+        AverageRating? averageRating) => new Menu(
             MenuId.CreateUnique(),
             name,
             description,
-            averageRating,
+            sections,
             hostId,
+            averageRating,
             DateTime.UtcNow,
             DateTime.UtcNow);
 }

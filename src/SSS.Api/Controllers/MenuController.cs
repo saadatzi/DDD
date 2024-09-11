@@ -3,6 +3,8 @@ using MapsterMapper;
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
+
+using SSS.Application.Menus.Commands.CreateMenu;
 using SSS.Contracts.Menus;
 
 namespace SSS.Api.Controllers;
@@ -25,6 +27,9 @@ public class MenuController : ApiController
     {
         var command = _mapper.Map<CreateMenuCommand>((request, hostId));
         var createdMenuResult = await _mediator.Send(command);
-        return Ok(createdMenuResult);
+
+        return createdMenuResult.Match(
+            menu => Ok(_mapper.Map<MenuResponse>(menu)), // menu => CreatedAtAction(nameof(GetMenu), new { hostId, menuId = menu.Id }, menu), // this approach will use another get endpoint named GetMenu to make the URL
+            errors => Problem(errors));
     }
 }

@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using ErrorOr;
 
 using MediatR;
 
-using SSS.Domain.Menu;
+using SSS.Domain.MenuAggregate;
 
-namespace SSS.Contracts.Menus;
+namespace SSS.Application.Menus.Commands.CreateMenu;
 
 public record CreateMenuCommand(
     string HostId,
@@ -21,11 +16,10 @@ public record MenuSectionCommand
 (
     string Name,
     string Description,
-    List<MenuItemCommand> MenuItems
-);
+    List<MenuItemCommand> Items);
 
 public record MenuItemCommand
 (
     string Name,
-    string Description
-);
+    string Description,
+    string Price);

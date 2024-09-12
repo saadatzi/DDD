@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,6 +19,8 @@ namespace SSS.Infrastructure;
 
 public static class DependencyInjection
 {
+    private static readonly ILoggerFactory Logger = LoggerFactory.Create(builder => { builder.AddConsole(); });
+
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         ConfigurationManager configuration)
@@ -37,6 +40,7 @@ public static class DependencyInjection
         services.AddDbContext<SSSDBContext>(options =>
             options
                 .UseSqlServer("Server=localhost;Database=SSS;User Id=sa;Password=@Saeed123!;TrustServerCertificate=true")
+                .UseLoggerFactory(Logger));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IMenuRepository, MenuRepository>();
 

@@ -31,6 +31,15 @@ How to implement a DDD solution with c# .net and structure the projects, folders
 ### Prerequisites
 
 - .NET SDK version 8.1
+- Entity Framework:
+    ```bash
+    dotnet tool install --global dotnet-ef
+    dotnet tool update --global dotnet-ef
+    ```
+- MicroSoft.EntityFrameworkCore.Design package to the project that has the configuration of the your tables(infrastructure here)
+    ```bash
+    dotnet add package Microsoft.EntityFrameworkCore.Design
+    ```
 
 ### Installation
 
@@ -54,6 +63,16 @@ How to implement a DDD solution with c# .net and structure the projects, folders
     ```bash
     dotnet run
     ```
+5. Run the SQL server on docker
+    ```bash
+    docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=StrongPassword;)DonotjustCopyPast" -p 1433:1433 --name sql_server_container -v sqlvolume:/var/opt/mssql -d mcr.microsoft.com/mssql/server:2022-latest
+    ```
+
+6. Update the database
+    ```bash
+    dotnet ef database update --project src/SSS.Infrastructure --startup-project src/SSS.Api --connection 'Server=localhost;Database=SSS;User Id=sa;Password=@Saeed123!;Encrypt=false'
+    ```
+
 
 ## API Documentation
 

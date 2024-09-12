@@ -2,6 +2,10 @@ namespace SSS.Domain.MenuReview.ValueObjects;
 
 public class MenuReviewId : ValueObject
 {
+    private MenuReviewId()
+    {
+    }
+
     private MenuReviewId(Guid value)
     {
         Value = value;

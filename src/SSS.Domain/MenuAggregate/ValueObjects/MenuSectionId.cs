@@ -7,6 +7,10 @@ namespace SSS.Domain.Menu.ValueObjects;
 
 public class MenuSectionId : ValueObject
 {
+    private MenuSectionId()
+    {
+    }
+
     private MenuSectionId(Guid value)
     {
         Value = value;
@@ -19,6 +23,8 @@ public class MenuSectionId : ValueObject
     {
         return new MenuSectionId(Guid.NewGuid());
     }
+
+    public static MenuSectionId Create(Guid value) => new(value);
 
     public override IEnumerable<object> GetEqualityComponent()
     {

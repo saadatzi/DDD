@@ -7,6 +7,10 @@ public sealed class MenuSection : Entity<MenuSectionId>
 {
     private readonly List<MenuItem> _items = [];
 
+    private MenuSection()
+    {
+    }
+
     private MenuSection(MenuSectionId id, string name, string description, List<MenuItem> items)
         : base(id)
     {

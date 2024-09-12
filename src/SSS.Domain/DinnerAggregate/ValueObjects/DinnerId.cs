@@ -7,12 +7,16 @@ namespace SSS.Domain.Common.Dinner.ValueObjects;
 
 public class DinnerId : ValueObject
 {
+    private DinnerId()
+    {
+    }
+
     private DinnerId(Guid value)
     {
         Value = value;
     }
 
-    public Guid Value { get; }
+    public Guid Value { get; private set; }
 
     public static DinnerId CreateUnique(Guid value) => new DinnerId(value);
 

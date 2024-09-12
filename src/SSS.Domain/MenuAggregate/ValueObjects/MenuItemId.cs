@@ -1,7 +1,13 @@
+using SSS.Domain.Menu.Entity;
+
 namespace SSS.Domain.Menu.ValueObjects;
 
 public class MenuItemId : ValueObject
 {
+    private MenuItemId()
+    {
+    }
+
     private MenuItemId(Guid value)
     {
         Value = value;
@@ -13,6 +19,8 @@ public class MenuItemId : ValueObject
     {
         return new MenuItemId(Guid.NewGuid());
     }
+
+    public static MenuItemId Create(Guid value) => new MenuItemId(value);
 
     public override IEnumerable<object> GetEqualityComponent()
     {

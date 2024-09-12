@@ -5,6 +5,10 @@ namespace SSS.Domain.MenuReview;
 
 public class MenuReview : AggregateRoot<MenuReviewId>
 {
+    private MenuReview()
+    {
+    }
+
     private MenuReview(MenuReviewId id, string name)
         : base(id)
     {

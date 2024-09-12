@@ -7,6 +7,10 @@ namespace SSS.Domain.Common.ValueObjects;
 
 public class Rating : ValueObject
 {
+    private Rating()
+    {
+    }
+
     private Rating(double value)
     {
         Value = value;

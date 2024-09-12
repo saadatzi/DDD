@@ -17,9 +17,9 @@ public class AverageRating : ValueObject
         NumRatings = numRatings;
     }
 
-    public double Value { get; private set; } = double.NaN;
+    public double Value { get; private set; }
 
-    public int NumRatings { get; private set; } = 0;
+    public int NumRatings { get; private set; }
 
     public static AverageRating Create(double value, int numRatings)
     {

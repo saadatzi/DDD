@@ -18,6 +18,10 @@ public sealed class Menu : AggregateRoot<MenuId>
     private readonly List<DinnerId> _dinnerIds = [];
     private readonly List<MenuReviewId> _menuReviewIds = [];
 
+    private Menu()
+    {
+    }
+
     private Menu(
         MenuId id,
         string name,
@@ -56,32 +60,32 @@ public sealed class Menu : AggregateRoot<MenuId>
     /// <summary>
     /// Gets the name of this menu item.
     /// </summary>
-    public string Name { get; }
+    public string Name { get; private set; }
 
     /// <summary>
     /// Gets the description of this menu item.
     /// </summary>
-    public string Description { get; }
+    public string Description { get; private set; }
 
     /// <summary>
     /// Gets the average rating for this menu item.
     /// </summary>
-    public AverageRating? AverageRating { get; }
+    public AverageRating? AverageRating { get; private set; }
 
     /// <summary>
     /// Gets the host id of this menu item.
     /// </summary>
-    public HostId HostId { get; }
+    public HostId HostId { get; private set; }
 
     /// <summary>
     /// Gets the created date time for this menu item.
     /// </summary>
-    public DateTime CreatedDateTime { get; }
+    public DateTime CreatedDateTime { get; private set; }
 
     /// <summary>
     /// Gets the updated date time for this menu item.
     /// </summary>
-    public DateTime UpdatedDateTime { get; }
+    public DateTime UpdatedDateTime { get; private set; }
 
     /// <summary>
     /// Creates a new instance of the <see cref="Menu"/> class.

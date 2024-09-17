@@ -11,7 +11,7 @@ namespace SSS.Domain.MenuAggregate;
 /// <summary>
 /// Represents a menu in the domain.
 /// </summary>
-public sealed class Menu : AggregateRoot<MenuId>
+public sealed class Menu : AggregateRoot<MenuId, Guid>
 {
     private readonly List<MenuSection> _sections = [];
 

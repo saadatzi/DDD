@@ -1,6 +1,8 @@
+using SSS.Domain.Common.Models;
+
 namespace SSS.Domain.Menu.ValueObjects;
 
-public class MenuId : ValueObject
+public class MenuId : AggregateRootId<Guid>
 {
     private MenuId()
     {
@@ -11,7 +13,7 @@ public class MenuId : ValueObject
         Value = value;
     }
 
-    public Guid Value { get; }
+    public override Guid Value { get; protected set; }
 
     // public static MenuId New() => new MenuId(Guid.NewGuid()); // another lambda function approach
     public static MenuId CreateUnique()

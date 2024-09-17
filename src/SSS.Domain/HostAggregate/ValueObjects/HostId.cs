@@ -1,8 +1,9 @@
+using SSS.Domain.Common.Models;
 using SSS.Domain.User.ValueObjects;
 
 namespace SSS.Domain.Host.ValueObjects;
 
-public class HostId : ValueObject
+public class HostId : AggregateRootId<string>
 {
     private HostId(string value)
     {
@@ -14,7 +15,7 @@ public class HostId : ValueObject
         Value = $"{Guid.NewGuid()}";
     }
 
-    public string Value { get; private set; }
+    public override string Value { get; protected set; }
 
     public static HostId CreateUnique() => new();
 

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SSS.Domain.Common.Models;
 
 namespace SSS.Domain.Common.Dinner.ValueObjects;
 
-public class DinnerId : ValueObject
+public class DinnerId : AggregateRootId<Guid>
 {
     private DinnerId()
     {
@@ -16,9 +13,14 @@ public class DinnerId : ValueObject
         Value = value;
     }
 
-    public Guid Value { get; private set; }
+    public override Guid Value { get; protected set; }
 
-    public static DinnerId CreateUnique(Guid value) => new DinnerId(value);
+    public static DinnerId CreateUnique()
+    {
+        return new DinnerId(Guid.NewGuid());
+    }
+
+    public static DinnerId Create(Guid value) => new DinnerId(value);
 
     public override IEnumerable<object> GetEqualityComponent()
     {

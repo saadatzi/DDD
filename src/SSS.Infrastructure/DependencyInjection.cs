@@ -13,6 +13,7 @@ using SSS.Application.Common.Interfaces.Persistence;
 using SSS.Application.Common.Interfaces.Services;
 using SSS.Infrastructure.Authentication;
 using SSS.Infrastructure.Persistence;
+using SSS.Infrastructure.Persistence.Interceptors;
 using SSS.Infrastructure.Services;
 
 namespace SSS.Infrastructure;
@@ -41,6 +42,7 @@ public static class DependencyInjection
             options
                 .UseSqlServer("Server=localhost;Database=SSS;User Id=sa;Password=@Saeed123!;TrustServerCertificate=true")
                 .UseLoggerFactory(Logger));
+        services.AddScoped<PublishDomainEventsInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IMenuRepository, MenuRepository>();
 

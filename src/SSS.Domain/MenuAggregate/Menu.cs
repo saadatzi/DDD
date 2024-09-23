@@ -4,6 +4,7 @@ using SSS.Domain.Common.ValueObjects;
 using SSS.Domain.Host.ValueObjects;
 using SSS.Domain.Menu.Entity;
 using SSS.Domain.Menu.ValueObjects;
+using SSS.Domain.MenuAggregate.Events;
 using SSS.Domain.MenuReview.ValueObjects;
 
 namespace SSS.Domain.MenuAggregate;
@@ -101,13 +102,20 @@ public sealed class Menu : AggregateRoot<MenuId, Guid>
         string description,
         List<MenuSection> sections,
         HostId hostId,
-        AverageRating? averageRating) => new Menu(
+        AverageRating? averageRating)
+    {
+        var menu = new Menu(
             MenuId.CreateUnique(),
             name,
             description,
             sections,
             hostId,
             averageRating,
-            DateTime.UtcNow,
+            DateTime.UtcNow, // TODO: Times should instantiate in their own place not her
             DateTime.UtcNow);
+
+        menu.AddDomainEvent(new MenuCreated(menu));
+
+        return menu;
+    }
 }

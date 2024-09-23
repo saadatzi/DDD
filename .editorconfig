@@ -214,6 +214,9 @@ dotnet_diagnostic.SA1010.severity = none
 # CS8618: Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 dotnet_diagnostic.CS8618.severity = silent
 
+# SA1300: Element should begin with upper-case letter
+dotnet_diagnostic.SA1300.severity = none
+
 [*.{cs,vb}]
 
 # Naming rules
